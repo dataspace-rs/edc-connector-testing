@@ -1,0 +1,56 @@
+name: Create and publish a Docker image
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "launchers/**"
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  NAMESPACE: dataspace-rs
+
+jobs:
+  release-version:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.release-version.outputs.RELEASE_VERSION }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4.1.0
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "gradle"
+      - name: Extract version
+        id: release-version
+        shell: bash
+        run: |-
+          VERSION=`./gradlew properties  | awk '/^version:/ {print $2}'`
+          echo "RELEASE_VERSION=${VERSION}" >> $GITHUB_OUTPUT
+
+  create-docker-image:
+    name: "Build and push images"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [ { dir: launchers, img: connector },
+                   { dir: launchers, img: controlplane } ]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/publish-docker-image
+        name: Publish ${{ matrix.variant.img }}
+        with:
+          registry: ${{ env.REGISTRY }}
+          docker_tag: ${{ needs.release-version.outputs.RELEASE_VERSION }}"
+          rootDir: ${{ matrix.variant.dir }}/${{ matrix.variant.img }}
+          imagename: ${{ matrix.variant.img }}
+          namespace: ${{ env.NAMESPACE }}
+          docker_user: ${{ github.actor }}
+          docker_token: ${{ secrets.GITHUB_TOKEN }}
