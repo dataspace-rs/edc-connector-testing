@@ -81,7 +81,7 @@ runs:
       uses: docker/build-push-action@v3
       with:
         context: ${{ inputs.rootDir }}
-        file: ${{ inputs.rootDir }}/build/resources/docker/Dockerfile
+        file: ${{ inputs.rootDir }}/build/resources/main/docker/Dockerfile
         build-args: |
           JAR=build/libs/${{ inputs.imagename }}.jar
         push: true

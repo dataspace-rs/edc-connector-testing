@@ -31,7 +31,7 @@ allprojects {
 subprojects {
     afterEvaluate {
         if (project.plugins.hasPlugin("com.github.johnrengelman.shadow") &&
-                file("${project.projectDir}/src/main/docker/Dockerfile").exists()
+                file("${project.projectDir}/src/main/resources/docker/Dockerfile").exists()
         ) {
 
             //actually apply the plugin to the (sub-)project
@@ -39,7 +39,7 @@ subprojects {
             // configure the "dockerize" task
             val dockerTask: DockerBuildImage = tasks.create("dockerize", DockerBuildImage::class) {
                 val dockerContextDir = project.projectDir
-                dockerFile.set(file("$dockerContextDir/src/main/docker/Dockerfile"))
+                dockerFile.set(file("$dockerContextDir/src/main/resources/docker/Dockerfile"))
                 images.add("${project.name}:${project.version}")
                 images.add("${project.name}:latest")
                 // specify platform with the -Dplatform flag:
