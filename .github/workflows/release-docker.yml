@@ -42,7 +42,10 @@ jobs:
         variant: [ { dir: launchers, img: connector },
                    { dir: launchers, img: controlplane } ]
     permissions:
-      contents: write
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/publish-docker-image
