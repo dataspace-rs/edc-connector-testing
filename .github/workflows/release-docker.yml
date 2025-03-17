@@ -35,6 +35,7 @@ jobs:
   create-docker-image:
     name: "Build and push images"
     runs-on: ubuntu-latest
+    needs: [release-version]
     strategy:
       fail-fast: false
       matrix:
@@ -48,7 +49,7 @@ jobs:
         name: Publish ${{ matrix.variant.img }}
         with:
           registry: ${{ env.REGISTRY }}
-          docker_tag: ${{ needs.release-version.outputs.RELEASE_VERSION }}"
+          docker_tag: ${{ needs.release-version.outputs.RELEASE_VERSION }}
           rootDir: ${{ matrix.variant.dir }}/${{ matrix.variant.img }}
           imagename: ${{ matrix.variant.img }}
           namespace: ${{ env.NAMESPACE }}
