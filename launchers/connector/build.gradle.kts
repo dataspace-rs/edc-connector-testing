@@ -18,6 +18,7 @@ dependencies {
     runtimeOnly(libs.edc.cp.api.configuration)
     runtimeOnly(libs.edc.dp.selector.api)
     runtimeOnly(libs.edc.dp.signaling)
+    runtimeOnly(libs.edc.api.secrets)
 }
 
 application {
