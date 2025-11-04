@@ -1,2 +1,6 @@
 
 org.testing.edc.VaultSeedExtension
+org.testing.edc.HttpProxyDataPlaneExtension
+
+
+

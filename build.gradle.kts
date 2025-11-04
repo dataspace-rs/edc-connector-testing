@@ -5,27 +5,22 @@ plugins {
     `java-library`
     alias(libs.plugins.shadow)
     alias(libs.plugins.docker)
+    alias(libs.plugins.edc.build)
 }
 
 buildscript {
     dependencies {
+        val version: String by project
         val edcGradlePluginsVersion: String by project
-        classpath("org.eclipse.edc.edc-build:org.eclipse.edc.edc-build.gradle.plugin:${edcGradlePluginsVersion}")
+        classpath("org.eclipse.edc.autodoc:org.eclipse.edc.autodoc.gradle.plugin:$version")
     }
 }
 
-val edcGradlePluginsVersion: String by project
+val edcBuildId = libs.plugins.edc.build.get().pluginId
 
 allprojects {
-    apply(plugin = "org.eclipse.edc.edc-build")
-
-    // configure which version of the annotation processor to use. defaults to the same version as the plugin
-    configure<org.eclipse.edc.plugins.autodoc.AutodocExtension> {
-        outputDirectory.set(project.layout.buildDirectory.asFile)
-        processorVersion.set(edcGradlePluginsVersion)
-    }
-
-
+    apply(plugin = edcBuildId)
+    apply(plugin = "org.eclipse.edc.autodoc")
 }
 
 subprojects {

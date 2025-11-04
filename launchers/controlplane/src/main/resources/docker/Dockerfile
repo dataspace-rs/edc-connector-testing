@@ -1,4 +1,4 @@
-FROM openjdk:17-slim
+FROM eclipse-temurin:24.0.1_9-jre-alpine
 
 ARG JVM_ARGS=""
 ARG JAR
