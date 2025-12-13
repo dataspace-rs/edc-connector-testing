@@ -18,6 +18,7 @@ edc-cp-api-configuration = { module = "org.eclipse.edc:control-api-configuration
 edc-dp-selector-api = { module = "org.eclipse.edc:data-plane-selector-control-api", version.ref ="edc"}
 edc-dp-signaling = { module = "org.eclipse.edc:transfer-data-plane-signaling", version.ref ="edc"}
 edc-api-secrets = { module = "org.eclipse.edc:secrets-api", version.ref = "edc" }
+edc-api-management-schema = {module = "org.eclipse.edc:management-api-schema-validator", version.ref= "edc"}
 
 [plugins]
 edc-build = { id = "org.eclipse.edc.edc-build", version = "1.1.2" }
