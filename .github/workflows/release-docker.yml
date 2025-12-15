@@ -40,7 +40,8 @@ jobs:
       fail-fast: false
       matrix:
         variant: [ { dir: launchers, img: connector },
-                   { dir: launchers, img: controlplane } ]
+                   { dir: launchers, img: controlplane },
+                   { dir: launchers, img: virtual-connector } ]
     permissions:
       contents: read
       packages: write
