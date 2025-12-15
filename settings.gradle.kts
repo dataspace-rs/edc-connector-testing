@@ -2,26 +2,15 @@
 pluginManagement {
     repositories {
         mavenLocal()
-        maven {
-            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-        }
-        mavenCentral()
         gradlePluginPortal()
-    }
-}
-
-dependencyResolutionManagement {
-
-    repositories {
-        maven {
-            url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-        }
         mavenCentral()
-        mavenLocal()
+        maven {
+            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
+        }
     }
 }
-
 
 include(":launchers:connector")
+include(":launchers:virtual-connector")
 include(":launchers:controlplane")
 include(":extensions:testing-extension")

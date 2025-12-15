@@ -11,7 +11,6 @@ plugins {
 buildscript {
     dependencies {
         val version: String by project
-        val edcGradlePluginsVersion: String by project
         classpath("org.eclipse.edc.autodoc:org.eclipse.edc.autodoc.gradle.plugin:$version")
     }
 }
