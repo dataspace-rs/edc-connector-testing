@@ -2,7 +2,8 @@
 format.version = "1.1"
 
 [versions]
-edc = "0.16.0-SNAPSHOT"
+edc = "0.17.0"
+edc-v = "0.18.0-SNAPSHOT"
 shadow = "8.1.1"
 docker = "9.4.0"
 
@@ -19,7 +20,7 @@ edc-dp-selector-api = { module = "org.eclipse.edc:data-plane-selector-control-ap
 edc-dp-signaling = { module = "org.eclipse.edc:transfer-data-plane-signaling", version.ref ="edc"}
 edc-api-secrets = { module = "org.eclipse.edc:secrets-api", version.ref = "edc" }
 edc-api-management-schema = {module = "org.eclipse.edc:management-api-schema-validator", version.ref= "edc"}
-edc-bom-virtual-controlplane={ module = "org.eclipse.edc.virtualized:virtual-controlplane-memory-bom", version.ref = "edc" }
+edc-bom-virtual-controlplane={ module = "org.eclipse.edc.virtualized:virtual-controlplane-memory-bom", version.ref = "edc-v" }
 
 [plugins]
 edc-build = { id = "org.eclipse.edc.edc-build", version = "1.1.2" }
