@@ -1,5 +1,4 @@
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
 
 plugins {
     `java-library`
@@ -8,23 +7,16 @@ plugins {
     alias(libs.plugins.edc.build)
 }
 
-buildscript {
-    dependencies {
-        val version: String by project
-        classpath("org.eclipse.edc.autodoc:org.eclipse.edc.autodoc.gradle.plugin:$version")
-    }
-}
 
 val edcBuildId = libs.plugins.edc.build.get().pluginId
 
 allprojects {
     apply(plugin = edcBuildId)
-    apply(plugin = "org.eclipse.edc.autodoc")
 }
 
 subprojects {
     afterEvaluate {
-        if (project.plugins.hasPlugin("com.github.johnrengelman.shadow") &&
+        if (project.plugins.hasPlugin("com.gradleup.shadow") &&
                 file("${project.projectDir}/src/main/resources/docker/Dockerfile").exists()
         ) {
 
@@ -43,7 +35,7 @@ subprojects {
                 inputDir.set(file(dockerContextDir))
             }
             // make sure  always runs after "dockerize" and after "copyOtel"
-            dockerTask.dependsOn(tasks.named(ShadowJavaPlugin.SHADOW_JAR_TASK_NAME))
+            dockerTask.dependsOn(tasks.named("shadowJar"))
         }
     }
 }

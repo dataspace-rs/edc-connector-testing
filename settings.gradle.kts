@@ -10,7 +10,6 @@ pluginManagement {
     }
 }
 
-include(":launchers:connector")
-include(":launchers:virtual-connector")
+include(":launchers:virtual-controlplane")
 include(":launchers:controlplane")
 include(":extensions:testing-extension")

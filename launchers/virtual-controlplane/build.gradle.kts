@@ -9,17 +9,10 @@ plugins {
 }
 
 dependencies {
-    runtimeOnly(libs.edc.bom.controlplane)
-    runtimeOnly(libs.edc.bom.dataplane) {
-        exclude("org.eclipse.edc", "data-plane-selector-client")
-    }
-    runtimeOnly(project(":extensions:testing-extension"))
+    runtimeOnly(libs.edc.bom.virtual.controlplane)
+    runtimeOnly(libs.edc.core.manager.negotiation)
+    runtimeOnly(libs.edc.core.manager.transfer)
     runtimeOnly(libs.edc.iam.mock)
-    runtimeOnly(libs.edc.cp.api.configuration)
-    runtimeOnly(libs.edc.dp.selector.api)
-    runtimeOnly(libs.edc.dp.signaling)
-    runtimeOnly(libs.edc.api.secrets)
-    runtimeOnly(libs.edc.api.management.schema)
 }
 
 application {
@@ -28,6 +21,8 @@ application {
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     dependsOn("distTar", "distZip")
+    // transformers must see duplicates, otherwise EXCLUDE drops them before mergeServiceFiles() runs
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
-    archiveFileName.set("connector.jar")
+    archiveFileName.set("virtual-controlplane.jar")
 }

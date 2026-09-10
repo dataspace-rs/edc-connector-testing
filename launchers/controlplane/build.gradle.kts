@@ -10,21 +10,17 @@ plugins {
 
 dependencies {
     runtimeOnly(libs.edc.bom.controlplane)
-    runtimeOnly(libs.edc.iam.mock)
-    runtimeOnly(libs.edc.cp.api.configuration)
-    runtimeOnly(libs.edc.dp.selector.api)
-    runtimeOnly(libs.edc.dp.signaling)
     runtimeOnly(libs.edc.api.secrets)
-    runtimeOnly(libs.edc.api.management.schema)
-    implementation(libs.edc.spi.boot)
+    runtimeOnly(libs.edc.iam.mock)
 }
-
 application {
     mainClass.set("org.eclipse.edc.boot.system.runtime.BaseRuntime")
 }
 
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     dependsOn("distTar", "distZip")
+    // transformers must see duplicates, otherwise EXCLUDE drops them before mergeServiceFiles() runs
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
     archiveFileName.set("controlplane.jar")
 }
