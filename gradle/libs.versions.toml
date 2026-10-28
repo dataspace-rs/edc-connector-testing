@@ -2,18 +2,22 @@
 format.version = "1.1"
 
 [versions]
-edc = "1.0.0-RC3"
+edc = "1.0.0-RC5"
 edc-build = "1.5.2"
 shadow = "9.6.1"
 docker = "9.4.0"
+dataplane-sdk = "1.1.1"
 
 [libraries]
 
 edc-bom-controlplane={ module = "org.eclipse.edc:controlplane-base-bom", version.ref = "edc" }
 edc-iam-mock = { module = "org.eclipse.edc:iam-mock", version.ref = "edc" }
-edc-spi-boot = { module = "org.eclipse.edc:boot-spi", version.ref = "edc" }
-edc-spi-dp = { module = "org.eclipse.edc:data-plane-spi", version.ref ="edc"}
-edc-spi-web = { module = "org.eclipse.edc:web-spi", version.ref ="edc"}
+edc-spi-core = { module = "org.eclipse.edc:core-spi", version.ref = "edc" }
+edc-spi-participantcontext-ih = { module = "org.eclipse.edc:participant-context-spi", version.ref = "edc" }
+edc-bom-controlplane-dcp = { module = "org.eclipse.edc:controlplane-dcp-bom", version.ref = "edc" }
+edc-bom-identityhub = { module = "org.eclipse.edc:identityhub-bom", version.ref = "edc" }
+dataplane-sdk-core = { module = "org.eclipse.dataplane-core:dataplane-sdk-core", version.ref = "dataplane-sdk" }
+dataplane-sdk-jakarta-ee = { module = "org.eclipse.dataplane-core:dataplane-sdk-jakarta-ee", version.ref = "dataplane-sdk" }
 edc-bom-virtual-controlplane = { module = "org.eclipse.edc:controlplane-virtual-base-bom", version.ref = "edc" }
 edc-core-manager-negotiation = { module = "org.eclipse.edc:control-plane-contract-manager", version.ref = "edc" }
 edc-core-manager-transfer = { module = "org.eclipse.edc:control-plane-transfer-manager", version.ref = "edc" }

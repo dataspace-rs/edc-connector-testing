@@ -12,4 +12,8 @@ pluginManagement {
 
 include(":launchers:virtual-controlplane")
 include(":launchers:controlplane")
+include(":launchers:controlplane-dcp")
+include(":launchers:identityhub")
 include(":extensions:testing-extension")
+include(":extensions:embedded-dataplane")
+include(":extensions:ih-superuser-seed")
