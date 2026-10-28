@@ -6,7 +6,7 @@ edc = "1.0.0-RC5"
 edc-build = "1.5.2"
 shadow = "9.6.1"
 docker = "9.4.0"
-dataplane-sdk = "1.1.1"
+dataplane-sdk = "1.2.1"
 
 [libraries]
 
