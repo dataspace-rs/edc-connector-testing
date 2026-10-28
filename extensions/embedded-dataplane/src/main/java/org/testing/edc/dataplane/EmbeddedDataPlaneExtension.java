@@ -82,6 +82,7 @@ public class EmbeddedDataPlaneExtension implements ServiceExtension {
         dataplane.registerControlPlane(new ControlPlaneRegistrationMessage(CONTROL_PLANE_ID, URI.create(controlPlaneSignalingUrl)))
                 .orElseThrow(e -> new IllegalStateException("registering the control plane: " + e.getMessage()));
 
+        webService.registerResource(CONTEXT, new AnonymousSignalingFilter());
         webService.registerResource(CONTEXT, new DataPlaneSignalingApiController(dataplane));
         webService.registerResource(CONTEXT, new TestingController(tokens, edrs));
         monitor.info("Embedded data plane signaling at %s/v1/dataflows".formatted(base));
