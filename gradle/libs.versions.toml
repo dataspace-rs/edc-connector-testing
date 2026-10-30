@@ -16,6 +16,7 @@ edc-spi-core = { module = "org.eclipse.edc:core-spi", version.ref = "edc" }
 edc-spi-participantcontext-ih = { module = "org.eclipse.edc:participant-context-spi", version.ref = "edc" }
 edc-bom-controlplane-dcp = { module = "org.eclipse.edc:controlplane-dcp-bom", version.ref = "edc" }
 edc-bom-identityhub = { module = "org.eclipse.edc:identityhub-bom", version.ref = "edc" }
+edc-bom-issuerservice = { module = "org.eclipse.edc:issuerservice-bom", version.ref = "edc" }
 dataplane-sdk-core = { module = "org.eclipse.dataplane-core:dataplane-sdk-core", version.ref = "dataplane-sdk" }
 dataplane-sdk-jakarta-ee = { module = "org.eclipse.dataplane-core:dataplane-sdk-jakarta-ee", version.ref = "dataplane-sdk" }
 edc-bom-virtual-controlplane = { module = "org.eclipse.edc:controlplane-virtual-base-bom", version.ref = "edc" }

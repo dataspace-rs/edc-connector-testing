@@ -10,8 +10,8 @@ import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
-import java.util.List;
 
 /**
  * Creates an admin participant context at boot, so the Identity API can be used with a known API key
@@ -24,6 +24,9 @@ public class SuperUserSeedExtension implements ServiceExtension {
     private String id;
     @Setting(key = "testing.ih.superuser.secret", description = "Secret part of the admin API key", defaultValue = "super-secret")
     private String secret;
+    @Setting(key = "testing.ih.superuser.scopes", description = "The admin's scopes, comma-separated "
+            + "(an IssuerService runtime also needs issuer-admin-api:admin)", defaultValue = "identity-api:admin")
+    private String scopes;
 
     @Inject
     private IdentityHubParticipantContextService participantContextService;
@@ -52,7 +55,7 @@ public class SuperUserSeedExtension implements ServiceExtension {
                 .provisionApiKey(false)
                 .provisionStsAccount(false)
                 .apiKeyAlias(alias)
-                .scopes(List.of("identity-api:admin"))
+                .scopes(Arrays.stream(scopes.split(",")).map(String::trim).filter(s -> !s.isEmpty()).toList())
                 .build();
         participantContextService.createParticipantContext(manifest)
                 .onSuccess(r -> monitor.info("Created admin participant context '%s'; API key: %s".formatted(id, apiKey)))

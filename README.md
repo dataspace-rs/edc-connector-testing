@@ -10,6 +10,7 @@ version, `latest` and the commit sha.
 | `virtual-controlplane` | EDC virtual (multi-participant) control plane with mock identity. |
 | `controlplane-dcp` | EDC control plane with DCP identity and an embedded testing data plane, in memory. |
 | `identityhub` | EDC IdentityHub (DID documents, Credential Service, STS, Identity API), in memory, with a seeded admin API key. |
+| `issuerservice` | EDC IssuerService (DCP issuance, Issuer Admin API, status lists, DID documents), in memory, with a seeded admin API key. |
 
 `controlplane-dcp` and `identityhub` together make one DCP participant:
 
@@ -81,3 +82,36 @@ With the admin key:
 
   The response carries the STS client secret.
 - **Add credentials:** `POST /api/identity/v1/participants/<id>/credentials`, format `VC1_0_JWT`.
+
+## issuerservice
+
+A credential issuer: holders request credentials over DCP issuance; what is
+issued, and to whom, is set up with the Issuer Admin API. In memory, only the
+`holder` attestation is available.
+
+| Setting | Example | Notes |
+|---|---|---|
+| `WEB_HTTP_PORT` / `_PATH` | `10206` / `/api` | Default context. |
+| `WEB_HTTP_DID_PORT` / `_PATH` | `10200` / `/` | DID documents. |
+| `WEB_HTTP_ISSUANCE_PORT` / `_PATH` | `10201` / `/api/issuance` | DCP Issuer Service. |
+| `WEB_HTTP_ISSUERADMIN_PORT` / `_PATH` | `10202` / `/api/admin` | Issuer Admin API (`x-api-key`). |
+| `WEB_HTTP_IDENTITY_PORT` / `_PATH` | `10203` / `/api/identity` | Identity API (`x-api-key`). |
+| `WEB_HTTP_STATUSLIST_PORT` / `_PATH` | `10204` / `/statuslist` | Status list credentials. |
+| `WEB_HTTP_STS_PORT` / `_PATH` | `10205` / `/api/sts` | |
+| `EDC_ISSUER_DCP_PROFILE` | `vc20-bssl/jwt` | Or `vc11-sl2021/jwt`. |
+| `EDC_IAM_DID_WEB_USE_HTTPS` | `false` | |
+| `TESTING_IH_SUPERUSER_SCOPES` | `identity-api:admin,issuer-admin-api:admin` | Both are needed to set up an issuer. |
+| `TESTING_IH_SUPERUSER_SECRET` | `super-secret` | As for `identityhub`. |
+
+With the admin key:
+
+1. **Create the issuer:** `POST /api/identity/v1/participants` with its DID, an
+   EC key used for `sign_credentials` and `sign_token`, and an `IssuerService`
+   endpoint `http://<host>:10201/api/issuance/v1/participants/<id>`.
+2. **Register holders:** `POST /api/admin/v1/participants/<id>/holders`
+   `{"holderId", "did", "name"}`.
+3. **Add an attestation:** `POST .../attestations`
+   `{"id", "attestationType": "holder", "configuration": {}}`.
+4. **Define credentials:** `POST .../credentialdefinitions` with the credential
+   type, the attestations, and mappings such as
+   `{"input": "participant.name", "output": "credentialSubject.name", "required": true}`.
